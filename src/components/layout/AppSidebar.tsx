@@ -9,7 +9,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem
 } from "@/components/ui/sidebar";
-import { Home, File, Users, FileText, Settings, Archive } from "lucide-react";
+import { Home, File, Users, FileText, Settings, Archive, Calendar, CalendarClock } from "lucide-react";
 import { NavLink } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import brazilianFlag from "@/assets/brazilian-flag.svg";
@@ -71,6 +71,15 @@ export function AppSidebar() {
                 </SidebarMenuButton>
               </SidebarMenuItem>
               
+              <SidebarMenuItem>
+                <SidebarMenuButton asChild>
+                  <NavLink to="/missions" className="w-full">
+                    <Calendar className="h-5 w-5" />
+                    <span>Missões Diárias</span>
+                  </NavLink>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+              
               {isAdmin && (
                 <>
                   <SidebarMenuItem>
@@ -87,6 +96,15 @@ export function AppSidebar() {
                       <NavLink to="/admin/users" className="w-full">
                         <Users className="h-5 w-5" />
                         <span>Gestão de Usuários</span>
+                      </NavLink>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                  
+                  <SidebarMenuItem>
+                    <SidebarMenuButton asChild>
+                      <NavLink to="/admin/missions" className="w-full">
+                        <CalendarClock className="h-5 w-5" />
+                        <span>Gestão de Missões</span>
                       </NavLink>
                     </SidebarMenuButton>
                   </SidebarMenuItem>

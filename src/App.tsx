@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider } from "@/hooks/useAuth";
 import { DocumentsProvider } from "@/hooks/useDocuments";
 import { UsersProvider } from "@/hooks/useUsers";
+import { MissionsProvider } from "@/hooks/useMissions";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
 
 // Páginas
@@ -20,6 +21,10 @@ import AdminUsersList from "./pages/AdminUsersList";
 import AdminNewUser from "./pages/AdminNewUser";
 import AdminEditUser from "./pages/AdminEditUser";
 import NotFound from "./pages/NotFound";
+import DailyMissions from "./pages/DailyMissions";
+import AdminMissionsList from "./pages/AdminMissionsList";
+import AdminCreateMission from "./pages/AdminCreateMission";
+import AdminMissionDetail from "./pages/AdminMissionDetail";
 
 const queryClient = new QueryClient();
 
@@ -28,7 +33,8 @@ const App = () => (
     <AuthProvider>
       <DocumentsProvider>
         <UsersProvider>
-          <TooltipProvider>
+          <MissionsProvider>
+            <TooltipProvider>
             <Toaster />
             <Sonner />
             <BrowserRouter>
@@ -69,6 +75,14 @@ const App = () => (
                     </ProtectedRoute>
                   }
                 />
+                <Route
+                  path="/missions"
+                  element={
+                    <ProtectedRoute>
+                      <DailyMissions />
+                    </ProtectedRoute>
+                  }
+                />
                 
                 {/* Rotas protegidas apenas para administradores */}
                 <Route
@@ -103,13 +117,38 @@ const App = () => (
                     </ProtectedRoute>
                   }
                 />
+                <Route
+                  path="/admin/missions"
+                  element={
+                    <ProtectedRoute requiredRole="admin">
+                      <AdminMissionsList />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/admin/missions/new"
+                  element={
+                    <ProtectedRoute requiredRole="admin">
+                      <AdminCreateMission />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/admin/missions/:id"
+                  element={
+                    <ProtectedRoute requiredRole="admin">
+                      <AdminMissionDetail />
+                    </ProtectedRoute>
+                  }
+                />
                 
                 {/* Rota de fallback */}
                 <Route path="/404" element={<NotFound />} />
                 <Route path="*" element={<Navigate to="/404" replace />} />
               </Routes>
             </BrowserRouter>
-          </TooltipProvider>
+            </TooltipProvider>
+          </MissionsProvider>
         </UsersProvider>
       </DocumentsProvider>
     </AuthProvider>
